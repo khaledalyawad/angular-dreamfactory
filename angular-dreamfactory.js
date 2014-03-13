@@ -310,7 +310,6 @@ angular.module('ngDreamFactory', [])
                         var consumes, e, obj, parts, produces,
                             _this = this;
                         this.api = api;
-                        this.api = this.api;
                         produces = [];
                         consumes = [];
                         this.path = this.api.resourcePath != null ? this.api.resourcePath : resourceObj.path;
