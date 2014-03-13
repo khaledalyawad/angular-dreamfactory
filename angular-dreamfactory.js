@@ -610,9 +610,8 @@ angular.module('ngDreamFactory', [])
                         }
                         if (this.isCollection) {
                             return [result];
-                        } else {
-                            return result;
                         }
+                        return result;
                     };
 
                     SwaggerModelProperty.prototype.toString = function () {
@@ -741,9 +740,8 @@ angular.module('ngDreamFactory', [])
                     SwaggerOperation.prototype.isListType = function (type) {
                         if (type.indexOf('[') >= 0) {
                             return type.substring(type.indexOf('[') + 1, type.indexOf(']'));
-                        } else {
-                            return void 0;
                         }
+                        return void 0;
                     };
 
                     SwaggerOperation.prototype.getSignature = function (type, models) {
@@ -752,13 +750,12 @@ angular.module('ngDreamFactory', [])
                         isPrimitive = ((listType != null) && models[listType]) || (models[type] != null) ? false : true;
                         if (isPrimitive) {
                             return type;
-                        } else {
-                            if (listType != null) {
-                                return models[listType].getMockSignature();
-                            } else {
-                                return models[type].getMockSignature();
-                            }
                         }
+                        if (listType != null) {
+                            return models[listType].getMockSignature();
+                        }
+                        return models[type].getMockSignature();
+                        
                     };
 
                     SwaggerOperation.prototype.getSampleJSON = function (type, models) {
@@ -852,9 +849,8 @@ angular.module('ngDreamFactory', [])
 
                         if (opts.mock != null) {
                             return req;
-                        } else {
-                            return true;
                         }
+                        return true;
                     };
 
                     SwaggerOperation.prototype.pathJson = function () {
