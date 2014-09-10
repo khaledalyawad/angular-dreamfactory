@@ -1,8 +1,9 @@
 'use strict';
 
 
-angular.module('__ngDreamFactory', [])
-    .service('__DreamFactory', ['DSP_URL', 'DSP_API_KEY', '$http', '$q', '$rootScope', function(DSP_URL, DSP_API_KEY, $http, $q, $rootScope) {
+angular.module('ngDreamFactory', [])
+    .service('DreamFactory', ['DSP_URL', 'DSP_API_KEY', '$http', '$q', '$rootScope', function(DSP_URL, DSP_API_KEY, $http, $q, $rootScope) {
+
 
         // swagger.js
         // version 2.0.38
@@ -25,7 +26,7 @@ angular.module('__ngDreamFactory', [])
 
         if (!Array.prototype.indexOf) {
             Array.prototype.indexOf = function(obj, start) {
-                for (var i = (start || 0), j = this.length; i &lt; j; i++) {
+                for (var i = (start || 0), j = this.length; i < j; i++) {
                     if (this[i] === obj) { return i; }
                 }
                 return -1;
@@ -35,7 +36,7 @@ angular.module('__ngDreamFactory', [])
         if (!('filter' in Array.prototype)) {
             Array.prototype.filter= function(filter, that /*opt*/) {
                 var other= [], v;
-                for (var i=0, n= this.length; i&lt;n; i++)
+                for (var i=0, n= this.length; i<n; i++)
                     if (i in this && filter.call(that, v= this[i], i, this))
                         other.push(v);
                 return other;
@@ -45,7 +46,7 @@ angular.module('__ngDreamFactory', [])
         if (!('map' in Array.prototype)) {
             Array.prototype.map= function(mapper, that /*opt*/) {
                 var other= new Array(this.length);
-                for (var i= 0, n= this.length; i&lt;n; i++)
+                for (var i= 0, n= this.length; i<n; i++)
                     if (i in this)
                         other[i]= mapper.call(that, this[i], i, this);
                 return other;
@@ -77,7 +78,7 @@ angular.module('__ngDreamFactory', [])
                 }
 
                 if (hasDontEnumBug) {
-                    for (var i = 0; i &lt; DontEnumsLength; i++) {
+                    for (var i = 0; i < DontEnumsLength; i++) {
                         if (hasOwnProperty.call(o, DontEnums[i]))
                             result.push(DontEnums[i]);
                     }
@@ -201,11 +202,11 @@ angular.module('__ngDreamFactory', [])
             }
             var isApi = false;
             var i;
-            for (i = 0; i &lt; response.apis.length; i++) {
+            for (i = 0; i < response.apis.length; i++) {
                 var api = response.apis[i];
                 if (api.operations) {
                     var j;
-                    for (j = 0; j &lt; api.operations.length; j++) {
+                    for (j = 0; j < api.operations.length; j++) {
                         operation = api.operations[j];
                         isApi = true;
                     }
@@ -213,7 +214,7 @@ angular.module('__ngDreamFactory', [])
             }
             if (response.basePath)
                 this.basePath = response.basePath;
-            else if (this.url.indexOf('?') &gt; 0)
+            else if (this.url.indexOf('?') > 0)
                 this.basePath = this.url.substring(0, this.url.lastIndexOf('?'));
             else
                 this.basePath = this.url;
@@ -226,17 +227,22 @@ angular.module('__ngDreamFactory', [])
                 this.apisArray.push(res);
             } else {
                 var k;
-                for (k = 0; k &lt; response.apis.length; k++) {
+                for (k = 0; k < response.apis.length; k++) {
                     var resource = response.apis[k];
                     var res = new SwaggerResource(resource, this);
                     this.apis[res.name] = res;
                     this.apisArray.push(res);
                 }
             }
-            if (this.success) {
-                this.success();
-            }
-            return this;
+
+
+            // Remove as not to fire success for initial api_docs call;
+            /*
+             if (this.success) {
+             this.success();
+             }
+             return this;
+             */
         };
 
         SwaggerApi.prototype.buildFrom1_1Spec = function(response) {
@@ -250,18 +256,18 @@ angular.module('__ngDreamFactory', [])
                 this.info = response.info;
             }
             var isApi = false;
-            for (var i = 0; i &lt; response.apis.length; i++) {
+            for (var i = 0; i < response.apis.length; i++) {
                 var api = response.apis[i];
                 if (api.operations) {
-                    for (var j = 0; j &lt; api.operations.length; j++) {
-                        operation = api.operations[j];
+                    for (var j = 0; j < api.operations.length; j++) {
+                        var operation = api.operations[j];
                         isApi = true;
                     }
                 }
             }
             if (response.basePath) {
                 this.basePath = response.basePath;
-            } else if (this.url.indexOf('?') &gt; 0) {
+            } else if (this.url.indexOf('?') > 0) {
                 this.basePath = this.url.substring(0, this.url.lastIndexOf('?'));
             } else {
                 this.basePath = this.url;
@@ -273,7 +279,7 @@ angular.module('__ngDreamFactory', [])
                 this.apis[newName] = res;
                 this.apisArray.push(res);
             } else {
-                for (k = 0; k &lt; response.apis.length; k++) {
+                for (k = 0; k < response.apis.length; k++) {
                     resource = response.apis[k];
                     res = new SwaggerResource(resource, this);
                     this.apis[res.name] = res;
@@ -326,7 +332,7 @@ angular.module('__ngDreamFactory', [])
             }
             _ref1 = this.modelsArray;
             _results = [];
-            for (_i = 0, _len = _ref1.length; _i &lt; _len; _i++) {
+            for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
                 model = _ref1[_i];
                 _results.push(model.setReferencedModels(this.models));
             }
@@ -344,7 +350,7 @@ angular.module('__ngDreamFactory', [])
                     operation = _ref1[operation_name];
                     log("  " + operation.nickname);
                     _ref2 = operation.parameters;
-                    for (_i = 0, _len = _ref2.length; _i &lt; _len; _i++) {
+                    for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
                         parameter = _ref2[_i];
                         log("    " + parameter.name + (parameter.required ? ' (required)' : '') + " - " + parameter.description);
                     }
@@ -454,14 +460,14 @@ angular.module('__ngDreamFactory', [])
                 this.produces = response.produces;
             if (response.consumes != null)
                 this.consumes = response.consumes;
-            if ((response.basePath != null) && response.basePath.replace(/\s/g, '').length &gt; 0)
+            if ((response.basePath != null) && response.basePath.replace(/\s/g, '').length > 0)
                 this.basePath = response.basePath.indexOf("http") === -1 ? this.getAbsoluteBasePath(response.basePath) : response.basePath;
 
             this.addModels(response.models);
 
 
             if (response.apis) {
-                for (var i = 0 ; i &lt; response.apis.length; i++) {
+                for (var i = 0 ; i < response.apis.length; i++) {
                     var endpoint = response.apis[i];
                     this.addOperations(endpoint.path, endpoint.operations, response.consumes, response.produces);
                 }
@@ -488,7 +494,7 @@ angular.module('__ngDreamFactory', [])
                     }
                 }
                 var output = [];
-                for (var i = 0; i &lt; this.modelsArray.length; i++) {
+                for (var i = 0; i < this.modelsArray.length; i++) {
                     var model = this.modelsArray[i];
                     output.push(model.setReferencedModels(this.models));
                 }
@@ -499,7 +505,7 @@ angular.module('__ngDreamFactory', [])
         SwaggerResource.prototype.addOperations = function(resource_path, ops, consumes, produces) {
             if (ops) {
                 var output = [];
-                for (var i = 0; i &lt; ops.length; i++) {
+                for (var i = 0; i < ops.length; i++) {
                     var o = ops[i];
                     consumes = this.consumes;
                     produces = this.produces;
@@ -530,7 +536,7 @@ angular.module('__ngDreamFactory', [])
                     }
                     if (o.errorResponses) {
                         responseMessages = o.errorResponses;
-                        for (var j = 0; j &lt; responseMessages.length; j++) {
+                        for (var j = 0; j < responseMessages.length; j++) {
                             var r = responseMessages[j];
                             r.message = r.reason;
                             r.reason = null;
@@ -550,7 +556,7 @@ angular.module('__ngDreamFactory', [])
 
         SwaggerResource.prototype.sanitize = function(nickname) {
             var op;
-            op = nickname.replace(/[\s!@#$%^&*()_+=\[{\]};:&lt;&gt;|.\/?,\\'""-]/g, '_');
+            op = nickname.replace(/[\s!@#$%^&*()_+=\[{\]};:<>|.\/?,\\'""-]/g, '_');
             op = op.replace(/((_){2,})/g, '_');
             op = op.replace(/^(_)*/g, '');
             op = op.replace(/([_])*$/g, '');
@@ -564,7 +570,7 @@ angular.module('__ngDreamFactory', [])
             for (operation_name in op) {
                 operation = op[operation_name];
                 var msg = "  " + operation.nickname;
-                for (var i = 0; i &lt; operation.parameters; i++) {
+                for (var i = 0; i < operation.parameters; i++) {
                     parameter = operation.parameters[i];
                     msg.concat("    " + parameter.name + (parameter.required ? ' (required)' : '') + " - " + parameter.description);
                 }
@@ -593,7 +599,7 @@ angular.module('__ngDreamFactory', [])
 
         SwaggerModel.prototype.setReferencedModels = function(allModels) {
             var results = [];
-            for (var i = 0; i &lt; this.properties.length; i++) {
+            for (var i = 0; i < this.properties.length; i++) {
                 var property = this.properties[i];
                 var type = property.type || property.dataType;
                 if (allModels[type] != null)
@@ -608,25 +614,25 @@ angular.module('__ngDreamFactory', [])
 
         SwaggerModel.prototype.getMockSignature = function(modelsToIgnore) {
             var propertiesStr = [];
-            for (var i = 0; i &lt; this.properties.length; i++) {
+            for (var i = 0; i < this.properties.length; i++) {
                 var prop = this.properties[i];
                 propertiesStr.push(prop.toString());
             }
 
-            var strong = '&lt;span class="strong"&gt;';
-            var stronger = '&lt;span class="stronger"&gt;';
-            var strongClose = '&lt;/span&gt;';
+            var strong = '<span class="strong">';
+            var stronger = '<span class="stronger">';
+            var strongClose = '</span>';
             var classOpen = strong + this.name + ' {' + strongClose;
             var classClose = strong + '}' + strongClose;
-            var returnVal = classOpen + '&lt;div&gt;' + propertiesStr.join(',&lt;/div&gt;&lt;div&gt;') + '&lt;/div&gt;' + classClose;
+            var returnVal = classOpen + '<div>' + propertiesStr.join(',</div><div>') + '</div>' + classClose;
             if (!modelsToIgnore)
                 modelsToIgnore = [];
             modelsToIgnore.push(this.name);
 
-            for (var i = 0; i &lt; this.properties.length; i++) {
+            for (var i = 0; i < this.properties.length; i++) {
                 var prop = this.properties[i];
                 if ((prop.refModel != null) && modelsToIgnore.indexOf(prop.refModel.name) === -1) {
-                    returnVal = returnVal + ('&lt;br&gt;' + prop.refModel.getMockSignature(modelsToIgnore));
+                    returnVal = returnVal + ('<br>' + prop.refModel.getMockSignature(modelsToIgnore));
                 }
             }
             return returnVal;
@@ -640,7 +646,7 @@ angular.module('__ngDreamFactory', [])
                 var result = {};
                 var modelsToIgnore = (modelsToIgnore||[])
                 modelsToIgnore.push(this.name);
-                for (var i = 0; i &lt; this.properties.length; i++) {
+                for (var i = 0; i < this.properties.length; i++) {
                     var prop = this.properties[i];
                     result[prop.name] = prop.getSampleValue(modelsToIgnore);
                 }
@@ -720,16 +726,16 @@ angular.module('__ngDreamFactory', [])
 
         SwaggerModelProperty.prototype.toString = function() {
             var req = this.required ? 'propReq' : 'propOpt';
-            var str = '&lt;span class="propName ' + req + '"&gt;' + this.name + '&lt;/span&gt; (&lt;span class="propType"&gt;' + this.dataTypeWithRef + '&lt;/span&gt;';
+            var str = '<span class="propName ' + req + '">' + this.name + '</span> (<span class="propType">' + this.dataTypeWithRef + '</span>';
             if (!this.required) {
-                str += ', &lt;span class="propOptKey"&gt;optional&lt;/span&gt;';
+                str += ', <span class="propOptKey">optional</span>';
             }
             str += ')';
             if (this.values != null) {
-                str += " = &lt;span class='propVals'&gt;['" + this.values.join("' or '") + "']&lt;/span&gt;";
+                str += " = <span class='propVals'>['" + this.values.join("' or '") + "']</span>";
             }
             if (this.descr != null) {
-                str += ': &lt;span class="propDesc"&gt;' + this.descr + '&lt;/span&gt;';
+                str += ': <span class="propDesc">' + this.descr + '</span>';
             }
             return str;
         };
@@ -752,7 +758,7 @@ angular.module('__ngDreamFactory', [])
             this.authorizations = authorizations;
             this["do"] = __bind(this["do"], this);
 
-            if (errors.length &gt; 0)
+            if (errors.length > 0)
                 this.resource.api.fail(errors);
 
             this.path = this.path.replace('{format}', 'json');
@@ -767,7 +773,7 @@ angular.module('__ngDreamFactory', [])
                 this.responseSampleJSON = this.getSampleJSON(this.type, this.resource.models);
             }
 
-            for(var i = 0; i &lt; this.parameters.length; i ++) {
+            for(var i = 0; i < this.parameters.length; i ++) {
                 var param = this.parameters[i];
                 // might take this away
                 param.name = param.name || param.type || param.dataType;
@@ -792,7 +798,7 @@ angular.module('__ngDreamFactory', [])
                     param.allowableValues = {};
                     param.allowableValues.descriptiveValues = [];
 
-                    for(var j = 0; j &lt; enumValue.length; j++) {
+                    for(var j = 0; j < enumValue.length; j++) {
                         var v = enumValue[j];
                         if(param.defaultValue != null) {
                             param.allowableValues.descriptiveValues.push ({
@@ -816,7 +822,7 @@ angular.module('__ngDreamFactory', [])
                     if(param.allowableValues != null) {
                         param.allowableValues.descriptiveValues = [];
                         if(param.allowableValues.values) {
-                            for(var j = 0; j &lt; param.allowableValues.values.length; j++){
+                            for(var j = 0; j < param.allowableValues.values.length; j++){
                                 var v = param.allowableValues.values[j];
                                 if(param.defaultValue != null) {
                                     param.allowableValues.descriptiveValues.push ({
@@ -847,7 +853,7 @@ angular.module('__ngDreamFactory', [])
         }
 
         SwaggerOperation.prototype.isListType = function(type) {
-            if (type && type.indexOf('[') &gt;= 0) {
+            if (type && type.indexOf('[') >= 0) {
                 return type.substring(type.indexOf('[') + 1, type.indexOf(']'));
             } else {
                 return void 0;
@@ -880,7 +886,7 @@ angular.module('__ngDreamFactory', [])
                     return val;
                 else if(typeof val === "object") {
                     var t = val;
-                    if(val instanceof Array && val.length &gt; 0) {
+                    if(val instanceof Array && val.length > 0) {
                         t = val[0];
                     }
                     if(t.nodeName) {
@@ -943,7 +949,7 @@ angular.module('__ngDreamFactory', [])
             }
 
             var possibleParams = [];
-            for(var i = 0; i &lt; this.parameters.length; i++) {
+            for(var i = 0; i < this.parameters.length; i++) {
                 var param = this.parameters[i];
                 if(param.paramType === 'header') {
                     if(args[param.name])
@@ -997,7 +1003,7 @@ angular.module('__ngDreamFactory', [])
             } else {
                 parts = pathParam.split("/");
                 encParts = [];
-                for (_i = 0, _len = parts.length; _i &lt; _len; _i++) {
+                for (_i = 0, _len = parts.length; _i < _len; _i++) {
                     part = parts[_i];
                     encParts.push(encodeURIComponent(part));
                 }
@@ -1008,7 +1014,7 @@ angular.module('__ngDreamFactory', [])
         SwaggerOperation.prototype.urlify = function(args) {
             var url = this.resource.basePath + this.pathJson();
             var params = this.parameters;
-            for(var i = 0; i &lt; params.length; i ++){
+            for(var i = 0; i < params.length; i ++){
                 var param = params[i];
                 if (param.paramType === 'path') {
                     if(args[param.name]) {
@@ -1023,7 +1029,7 @@ angular.module('__ngDreamFactory', [])
             }
 
             var queryParams = "";
-            for(var i = 0; i &lt; params.length; i ++){
+            for(var i = 0; i < params.length; i ++){
                 var param = params[i];
                 if(param.paramType === 'query') {
                     if (args[param.name] !== undefined) {
@@ -1033,7 +1039,7 @@ angular.module('__ngDreamFactory', [])
                     }
                 }
             }
-            if ((queryParams != null) && queryParams.length &gt; 0)
+            if ((queryParams != null) && queryParams.length > 0)
                 url += '?' + queryParams;
             return url;
         };
@@ -1057,8 +1063,8 @@ angular.module('__ngDreamFactory', [])
         SwaggerOperation.prototype.getMatchingParams = function(paramTypes, args) {
             var matchingParams = {};
             var params = this.parameters;
-            for (var i = 0; i &lt; params.length; i++) {
-                param = params[i];
+            for (var i = 0; i < params.length; i++) {
+                var param = params[i];
                 if (args && args[param.name])
                     matchingParams[param.name] = args[param.name];
             }
@@ -1074,7 +1080,7 @@ angular.module('__ngDreamFactory', [])
         SwaggerOperation.prototype.help = function() {
             var msg = "";
             var params = this.parameters;
-            for (var i = 0; i &lt; params.length; i++) {
+            for (var i = 0; i < params.length; i++) {
                 var param = params[i];
                 if (msg !== "")
                     msg += "\n";
@@ -1085,9 +1091,9 @@ angular.module('__ngDreamFactory', [])
 
         SwaggerOperation.prototype.formatXml = function(xml) {
             var contexp, formatted, indent, lastType, lines, ln, pad, reg, transitions, wsexp, _fn, _i, _len;
-            reg = /(&gt;)(&lt;)(\/*)/g;
+            reg = /(>)(<)(\/*)/g;
             wsexp = /[ ]*(.*)[ ]+\n/g;
-            contexp = /(&lt;.+&gt;)(.+\n)/g;
+            contexp = /(<.+>)(.+\n)/g;
             xml = xml.replace(reg, '$1\n$2$3').replace(wsexp, '$1\n').replace(contexp, '$1\n$2');
             pad = 0;
             formatted = '';
@@ -1095,29 +1101,29 @@ angular.module('__ngDreamFactory', [])
             indent = 0;
             lastType = 'other';
             transitions = {
-                'single-&gt;single': 0,
-                'single-&gt;closing': -1,
-                'single-&gt;opening': 0,
-                'single-&gt;other': 0,
-                'closing-&gt;single': 0,
-                'closing-&gt;closing': -1,
-                'closing-&gt;opening': 0,
-                'closing-&gt;other': 0,
-                'opening-&gt;single': 1,
-                'opening-&gt;closing': 0,
-                'opening-&gt;opening': 1,
-                'opening-&gt;other': 1,
-                'other-&gt;single': 0,
-                'other-&gt;closing': -1,
-                'other-&gt;opening': 0,
-                'other-&gt;other': 0
+                'single->single': 0,
+                'single->closing': -1,
+                'single->opening': 0,
+                'single->other': 0,
+                'closing->single': 0,
+                'closing->closing': -1,
+                'closing->opening': 0,
+                'closing->other': 0,
+                'opening->single': 1,
+                'opening->closing': 0,
+                'opening->opening': 1,
+                'opening->other': 1,
+                'other->single': 0,
+                'other->closing': -1,
+                'other->opening': 0,
+                'other->other': 0
             };
             _fn = function(ln) {
                 var fromTo, j, key, padding, type, types, value;
                 types = {
-                    single: Boolean(ln.match(/&lt;.+\/&gt;/)),
-                    closing: Boolean(ln.match(/&lt;\/.+&gt;/)),
-                    opening: Boolean(ln.match(/&lt;[^!?].*&gt;/))
+                    single: Boolean(ln.match(/<.+\/>/)),
+                    closing: Boolean(ln.match(/<\/.+>/)),
+                    opening: Boolean(ln.match(/<[^!?].*>/))
                 };
                 type = ((function() {
                     var _results;
@@ -1131,25 +1137,25 @@ angular.module('__ngDreamFactory', [])
                     return _results;
                 })())[0];
                 type = type === void 0 ? 'other' : type;
-                fromTo = lastType + '-&gt;' + type;
+                fromTo = lastType + '->' + type;
                 lastType = type;
                 padding = '';
                 indent += transitions[fromTo];
                 padding = ((function() {
                     var _j, _ref5, _results;
                     _results = [];
-                    for (j = _j = 0, _ref5 = indent; 0 &lt;= _ref5 ? _j &lt; _ref5 : _j &gt; _ref5; j = 0 &lt;= _ref5 ? ++_j : --_j) {
+                    for (j = _j = 0, _ref5 = indent; 0 <= _ref5 ? _j < _ref5 : _j > _ref5; j = 0 <= _ref5 ? ++_j : --_j) {
                         _results.push('  ');
                     }
                     return _results;
                 })()).join('');
-                if (fromTo === 'opening-&gt;closing') {
+                if (fromTo === 'opening->closing') {
                     return formatted = formatted.substr(0, formatted.length - 1) + ln + '\n';
                 } else {
                     return formatted += padding + ln + '\n';
                 }
             };
-            for (_i = 0, _len = lines.length; _i &lt; _len; _i++) {
+            for (_i = 0, _len = lines.length; _i < _len; _i++) {
                 ln = lines[_i];
                 _fn(ln);
             }
@@ -1176,7 +1182,7 @@ angular.module('__ngDreamFactory', [])
             this.execution = execution;
             this.headers = (params.headers||{});
 
-            if(errors.length &gt; 0) {
+            if(errors.length > 0) {
                 throw errors;
             }
 
@@ -1191,7 +1197,7 @@ angular.module('__ngDreamFactory', [])
                 var values = {};
                 var i;
                 var operationParams = this.operation.parameters;
-                for(i = 0; i &lt; operationParams.length; i++) {
+                for(i = 0; i < operationParams.length; i++) {
                     var param = operationParams[i];
                     if(param.paramType === "form")
                         values[param.name] = param;
@@ -1201,7 +1207,7 @@ angular.module('__ngDreamFactory', [])
                     var encoded = "";
                     var key;
                     for(key in values) {
-                        value = this.params[key];
+                        var value = this.params[key];
                         if(typeof value !== 'undefined'){
                             if(encoded !== "")
                                 encoded += "&";
@@ -1216,7 +1222,7 @@ angular.module('__ngDreamFactory', [])
                     var boundary = "----SwaggerFormBoundary" + Date.now();
                     var key;
                     for(key in values) {
-                        value = this.params[key];
+                        var value = this.params[key];
                         if(typeof value !== 'undefined') {
                             data += '--' + boundary + '\n';
                             data += 'Content-Disposition: form-data; name="' + key + '"';
@@ -1288,7 +1294,7 @@ angular.module('__ngDreamFactory', [])
 
             // get params from the operation and set them in definedFileParams, definedFormParams, headers
             var i;
-            for(i = 0; i &lt; allDefinedParams.length; i++) {
+            for(i = 0; i < allDefinedParams.length; i++) {
                 var param = allDefinedParams[i];
                 if(param.paramType === "form")
                     definedFormParams.push(param);
@@ -1308,8 +1314,8 @@ angular.module('__ngDreamFactory', [])
                     consumes = this.opts.requestContentType;
             } else {
                 // if any form params, content type must be set
-                if(definedFormParams.length &gt; 0) {
-                    if(definedFileParams.length &gt; 0)
+                if(definedFormParams.length > 0) {
+                    if(definedFileParams.length > 0)
                         consumes = "multipart/form-data";
                     else
                         consumes = "application/x-www-form-urlencoded";
@@ -1396,7 +1402,7 @@ angular.module('__ngDreamFactory', [])
                 var nav = navigator.userAgent.toLowerCase();
                 if (nav.indexOf('msie') !== -1) {
                     var version = parseInt(nav.split('msie')[1]);
-                    if (version &lt;= 8) {
+                    if (version <= 8) {
                         detectedIE = true;
                     }
                 }
@@ -1446,7 +1452,7 @@ angular.module('__ngDreamFactory', [])
                 var headers = {},
                     headerArray = response.getAllResponseHeaders().split("\n");
 
-                for(var i = 0; i &lt; headerArray.length; i++) {
+                for(var i = 0; i < headerArray.length; i++) {
                     var toSplit = headerArray[i].trim();
                     if(toSplit.length === 0)
                         continue;
@@ -1472,7 +1478,7 @@ angular.module('__ngDreamFactory', [])
                 var contentType = (headers["content-type"]||headers["Content-Type"]||null)
 
                 if(contentType != null) {
-                    if(contentType.indexOf("application/json") == 0 || contentType.indexOf("+json") &gt; 0) {
+                    if(contentType.indexOf("application/json") == 0 || contentType.indexOf("+json") > 0) {
                         if(response.responseText && response.responseText !== "")
                             out.obj = JSON.parse(response.responseText);
                         else
@@ -1480,9 +1486,9 @@ angular.module('__ngDreamFactory', [])
                     }
                 }
 
-                if(response.status &gt;= 200 && response.status &lt; 300)
+                if(response.status >= 200 && response.status < 300)
                     cb.response(out);
-                else if(response.status === 0 || (response.status &gt;= 400 && response.status &lt; 599))
+                else if(response.status === 0 || (response.status >= 400 && response.status < 599))
                     cb.error(out);
                 else
                     return cb.response(out);
@@ -1506,6 +1512,7 @@ angular.module('__ngDreamFactory', [])
                     url: obj.url,
                     method: obj.method,
                     params: obj.params,
+                    headers: obj.headers,
                     data: obj.body
                 });
             }
@@ -1514,6 +1521,7 @@ angular.module('__ngDreamFactory', [])
                     url: obj.url,
                     method: obj.method,
                     params: obj.params,
+                    headers: obj.headers,
                     data: obj.body
 
                 }).success(function(result) {
@@ -1590,7 +1598,7 @@ angular.module('__ngDreamFactory', [])
                 var contentType = (response._headers["content-type"]||response._headers["Content-Type"]||null)
 
                 if(contentType != null) {
-                    if(contentType.indexOf("application/json") == 0 || contentType.indexOf("+json") &gt; 0) {
+                    if(contentType.indexOf("application/json") == 0 || contentType.indexOf("+json") > 0) {
                         if(response.content.data && response.content.data !== "")
                             out.obj = JSON.parse(response.content.data);
                         else
@@ -1706,7 +1714,7 @@ angular.module('__ngDreamFactory', [])
 
         ApiKeyAuthorization.prototype.apply = function(obj, authorizations) {
             if (this.type === "query") {
-                if (obj.url.indexOf('?') &gt; 0)
+                if (obj.url.indexOf('?') > 0)
                     obj.url = obj.url + "&" + this.name + "=" + this.value;
                 else
                     obj.url = obj.url + "?" + this.name + "=" + this.value;
@@ -1803,6 +1811,6 @@ angular.module('__ngDreamFactory', [])
             }
         }
     }])
-    .run(['__DreamFactory', function(__DreamFactory) {
-        __DreamFactory.swaggerInit();
+    .run(['DreamFactory', function(DreamFactory) {
+        DreamFactory.swaggerInit();
     }]);
