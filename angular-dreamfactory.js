@@ -19,7 +19,7 @@ angular.module('__ngDreamFactory', [])
 //            log.history = log.history || [];
 //            log.history.push(arguments);
 //            if(this.console){
-//                console.log( Array.prototype.slice.call(arguments)[0] );
+//                // console.log( Array.prototype.slice.call(arguments)[0] );
 //            }
         };
 
@@ -1158,7 +1158,7 @@ angular.module('__ngDreamFactory', [])
 
         var SwaggerRequest = function(type, url, params, opts, successCallback, errorCallback, operation, execution) {
 
-            console.log('swaggerRequest funcs')
+            // console.log('swaggerRequest funcs')
 
             var _this = this;
             var errors = [];
@@ -1364,7 +1364,7 @@ angular.module('__ngDreamFactory', [])
 
         SwaggerHttp.prototype.execute = function(obj) {
 
-            console.log('Swagger Http execute funcs')
+            // console.log('Swagger Http execute funcs')
 
             switch(obj.httpClient.type) {
 
@@ -1498,7 +1498,7 @@ angular.module('__ngDreamFactory', [])
 
         AngularHttpClient.prototype.execute = function(obj) {
 
-            console.log('angular client func');
+            // console.log('angular client func');
 
             if (obj.url.lastIndexOf('api_docs') == '-1' && obj.httpClient.promises) {
 
