@@ -1,12 +1,8 @@
 'use strict';
 
 
-
 angular.module('__ngDreamFactory', [])
     .service('__DreamFactory', ['DSP_URL', 'DSP_API_KEY', '$http', '$q', '$rootScope', function(DSP_URL, DSP_API_KEY, $http, $q, $rootScope) {
-
-
-
 
         // swagger.js
         // version 2.0.38
