@@ -460,9 +460,9 @@ angular.module('ngDreamFactory', [])
                 this.produces = response.produces;
             if (response.consumes != null)
                 this.consumes = response.consumes;
-            if ((response.basePath != null) && response.basePath.replace(/\s/g, '').length > 0)
-                this.basePath = response.basePath.indexOf("http") === -1 ? this.getAbsoluteBasePath(response.basePath) : response.basePath;
-
+//          if ((response.basePath != null) && response.basePath.replace(/\s/g, '').length > 0)
+//              this.basePath = response.basePath.indexOf("http") === -1 ? this.getAbsoluteBasePath(response.basePath) : response.basePath;
+            this.basePath = DSP_URL + "/rest"
             this.addModels(response.models);
 
 
