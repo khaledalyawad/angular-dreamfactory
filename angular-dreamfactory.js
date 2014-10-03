@@ -941,19 +941,43 @@ angular.module('ngDreamFactory', [])
                     return log("default callback: " + content);
                 };
             }
+
             params = {};
-            params.headers = [];
+            params.headers = {};
             if (args.headers != null) {
                 params.headers = args.headers;
                 delete args.headers;
             }
 
-            var possibleParams = [];
+            possibleParams = [];
+
             for(var i = 0; i < this.parameters.length; i++) {
-                var param = this.parameters[i];
+
+                param = this.parameters[i];
+
                 if(param.paramType === 'header') {
-                    if(args[param.name])
-                        params.headers[param.name] = args[param.name];
+
+                    if(args[param.name]) {
+                        params.headers[param.name] = args[param.name]
+                    }
+                    else {
+
+                        // retrieve header params and default value
+                        var valuesArr = param.allowableValues.descriptiveValues;
+
+                        if (valuesArr.length > 1) {
+                            for (var i = 0; i < valuesArr.length - 1; i++) {
+                                if (valuesArr[i].isDefault) {
+                                    params.headers[param.name] = valuesArr[i].value
+                                }
+                            }
+                        }
+                        else {
+
+                            // var name = param.name === 'X-HTTP-METHOD' ? 'X-METHOD': param.name;
+                            params.headers[param.name] = valuesArr[0].value;
+                        }
+                    }
                 }
                 else if(param.paramType === 'form' || param.paramType.toLowerCase() === 'file')
                     possibleParams.push(param);
