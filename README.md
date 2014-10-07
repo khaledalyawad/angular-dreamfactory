@@ -101,72 +101,70 @@ Here's an example of injecting the DreamFactory service into a controller and ex
 ```
 
 
-Using DreamFactory with promises works the same as using promises with $http.  This time we'll demonstrate an AngularJS service built using the DreamFactory service to request a record set from a database and return that with a promise.
+Using DreamFactory with promises works the same as using promises with $http.  This time we'll demonstrate an AngularJS service built using the DreamFactory service to request a record set from a database and return that with a promise.  We'll also add an extra param to limit the number of records retrieved.
 
 ```javascript
 // Define a Controller
 .controller('MyCtrl', ['MyService', function(MyService) {
 
+  // Params for call
+  scope.callParams = {
+    table_name: '_YOUR_TABLE_NAME_',
+    params: {
+        limit: 10
+    }
+  }
+
 
   // Function to call custom service
   $scope.getRecords = function() {
-  
+
      // call custom service built using DreamFactory that returns a promise
-     MyService.getRecords('_YOUR_TABLE_NAME_').then(
-     
+     MyService.getRecords(callParams).then(
+
      // Success function
       function(result) {
-     
+
       // Do something with the record set
      },
-     
+
      // Error function
      function(reject) {
-     
+
       // Handle error
      });
   }
 }])
 
-//Define a custom service
-.service('MyService', ['$q', 'DreamFactory', function($q, DreamFactory) {
-  
+
+
+// Define a custom service that returns a promise from a call
+
+.service('MyService', ['DreamFactory', function(DreamFactory) {
+
   return {
-    
-    // Define custom getRecords service  
+
+    // Define custom getRecords service
     getRecords: function(tableNameStr) {
-    
-      // create a promise
-      var deferred = $q.defer();
-          
+
+
       // Create request obj
       var request = {
             table_name: tableNameStr
           };
-      
+
       // Call DreamFactory database service with request obj
-      DreamFactory.api.db.getRecords(request,
-      
-        // Success function
-        function(data) {
-          
-          // Handle promise
-          deferred.resolve(data);
-        },
-        
-        // Error function
-        function(error) {
-        
-          // Handle Promise
-          deferred.reject(error);
-        }
-      );
+      // As long as we don't specify callback/error functions
+      // angular-dreamfactory will return promises
+
+      return DreamFactory.api.db.getRecords(request);
+
     }
-    
-    // Return promise
-    return deferred.promise;
   }
 }]);
+
+
+
 ```
 
 That's all there is to it!
