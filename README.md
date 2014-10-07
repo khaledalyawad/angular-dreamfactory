@@ -99,9 +99,9 @@ Here's an example of injecting the DreamFactory service into a controller and ex
       function(error) {
       
         // Handle Login failure
-      }
+      });
   }
-}];
+}]);
 ```
 
 
