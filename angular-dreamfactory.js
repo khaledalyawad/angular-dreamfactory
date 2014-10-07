@@ -926,10 +926,10 @@ angular.module('ngDreamFactory', [])
                     return log(xhr, textStatus, error);
                 };
             }
-            if (callback == null) {
 
-                // @TODO: if no callbacks and promises truned on skip default callback generation
-
+            // We will return a promise if there are no
+            // callback/error funcs specified
+            /*if (callback == null) {
                 callback = function(response) {
                     var content;
                     content = null;
@@ -940,7 +940,7 @@ angular.module('ngDreamFactory', [])
                     }
                     return log("default callback: " + content);
                 };
-            }
+            }*/
 
             params = {};
             params.headers = {};
@@ -1200,8 +1200,13 @@ angular.module('ngDreamFactory', [])
             this.url = (url||errors.push("SwaggerRequest url is required."));
             this.params = params;
             this.opts = opts;
-            this.successCallback = (successCallback||errors.push("SwaggerRequest successCallback is required."));
-            this.errorCallback = (errorCallback||errors.push("SwaggerRequest error callback is required."));
+
+            // No loanger required as we will return a promise if there is no callback supplied
+            // this.successCallback = (successCallback||errors.push("SwaggerRequest successCallback is required."));
+            // this.errorCallback = (errorCallback||errors.push("SwaggerRequest error callback is required."));
+
+            this.successCallback = successCallback||null;
+            this.errorCallback = errorCallback||null;
             this.operation = (operation||errors.push("SwaggerRequest operation is required."));
             this.execution = execution;
             this.headers = (params.headers||{});
@@ -1259,6 +1264,15 @@ angular.module('ngDreamFactory', [])
                     body = data;
                 }
             }
+
+
+            // Did we provide a callback
+            if (!this.successCallback) {
+
+                // No.  turn on promises
+                this.httpClient.promises = true
+            }
+
 
             if (!((this.headers != null) && (this.headers.mock != null))) {
                 var obj = {
@@ -1820,7 +1834,7 @@ angular.module('ngDreamFactory', [])
                 e.authorizations.add('Content-Type', new e.ApiKeyAuthorization('Content-Type', 'application/json', 'header'));
 
                 this.api = new e.SwaggerApi({
-                    httpClient: {type: 'angular', promises: true},
+                    httpClient: {type: 'angular'},
                     url: DSP_URL + '/rest/api_docs',
                     supportedSubmitMethods: this.supportedSubmitMethods,
                     success: function () {
