@@ -86,9 +86,12 @@ Here's an example of injecting the DreamFactory service into a controller and ex
     DreamFactory.api.user.login($scope.creds,
     
       // Success function
-      function(data) {
-        
+      function(result) {
+        // Here was have passed in our success/error callbacks
+        // your data will not be wrapped in a 'data' object
+
         // Handle login success
+        console.log(result)
       },
       
       // Error function
@@ -125,7 +128,12 @@ Using DreamFactory with promises works the same as using promises with $http.  T
      // Success function
       function(result) {
 
+      // We have a returned promise here.
+      // your data will be wrapped in a data object.
+      // result.data.record
+
       // Do something with the record set
+      console.log(result.data.record)
      },
 
      // Error function
@@ -134,7 +142,7 @@ Using DreamFactory with promises works the same as using promises with $http.  T
       // Handle error
      });
   }
-}])
+}]);
 
 
 
