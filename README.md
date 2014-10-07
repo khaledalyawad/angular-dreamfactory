@@ -83,12 +83,13 @@ Here's an example of injecting the DreamFactory service into a controller and ex
   $scope.loginFunc = function() {
   
     // Call to the DreamFactory user service using provided login method
+    // Here was have passed in our success/error callbacks
     DreamFactory.api.user.login($scope.creds,
     
       // Success function
       function(result) {
-        // Here was have passed in our success/error callbacks
-        // your data will not be wrapped in a 'data' object
+
+        // returned data will not be wrapped in a 'data' object
 
         // Handle login success
         console.log(result)
@@ -163,7 +164,8 @@ Using DreamFactory with promises works the same as using promises with $http.  T
 
       // Call DreamFactory database service with request obj
       // As long as we don't specify callback/error functions
-      // angular-dreamfactory will return promises
+      // angular-dreamfactory will return promises which we are passing
+      // back as the result of the call to MyService.getRecords() in the controller
 
       return DreamFactory.api.db.getRecords(request);
 
