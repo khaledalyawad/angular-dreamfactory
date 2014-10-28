@@ -966,9 +966,9 @@ angular.module('ngDreamFactory', [])
                         var valuesArr = param.allowableValues.descriptiveValues;
 
                         if (valuesArr.length > 1) {
-                            for (var i = 0; i < valuesArr.length - 1; i++) {
-                                if (valuesArr[i].isDefault) {
-                                    params.headers[param.name] = valuesArr[i].value
+                            for (var j = 0; j < valuesArr.length - 1; j++) {
+                                if (valuesArr[j].isDefault) {
+                                    params.headers[param.name] = valuesArr[j].value
                                 }
                             }
                         }
