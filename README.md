@@ -75,10 +75,12 @@ Here's an example of injecting the DreamFactory service into a controller and ex
   
   // model for login credentials
   $scope.creds = {
-    email: '',
-    password: ''
+      "body": {
+          "email": '',
+          "password": ''
+      }
   }
-  
+
   // Login function
   $scope.loginFunc = function() {
   
