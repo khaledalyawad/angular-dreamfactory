@@ -1818,6 +1818,8 @@ angular.module('ngDreamFactory', [])
         e.SwaggerResource = SwaggerResource;
         e.SwaggerApi = SwaggerApi;
 
+        var ready = false;
+
 
         return {
 
@@ -1825,7 +1827,7 @@ angular.module('ngDreamFactory', [])
             ready: false,
             api: {},
             isReady: function () {
-                return this.ready;
+                return ready;
             },
 
             swaggerInit: function () {
@@ -1838,7 +1840,7 @@ angular.module('ngDreamFactory', [])
                     url: DSP_URL + '/rest/api_docs',
                     supportedSubmitMethods: this.supportedSubmitMethods,
                     success: function () {
-                        this.ready = true;
+                        ready = true;
                         $rootScope.$broadcast('api:ready');
                     },
                     error: function () {
