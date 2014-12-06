@@ -114,7 +114,7 @@ Using DreamFactory with promises works the same as using promises with $http.  T
 .controller('MyCtrl', ['MyService', function(MyService) {
 
   // Params for call
-  scope.callParams = {
+  $scope.callParams = {
     table_name: '_YOUR_TABLE_NAME_',
     params: {
         limit: 10
