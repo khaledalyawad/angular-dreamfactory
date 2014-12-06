@@ -70,7 +70,7 @@ Here's an example of injecting the DreamFactory service into a controller and ex
 
 ```javascript
 // Define a Controller
-.controller('MyCtrl', ['DreamFactory', function(DreamFactory) {
+.controller('MyCtrl', ['DreamFactory', '$scope', function(DreamFactory, $scope) {
   
   
   // model for login credentials
@@ -111,10 +111,10 @@ Using DreamFactory with promises works the same as using promises with $http.  T
 
 ```javascript
 // Define a Controller
-.controller('MyCtrl', ['MyService', function(MyService) {
+.controller('MyCtrl', ['MyService', '$scope', function(MyService, $scope) {
 
   // Params for call
-  scope.callParams = {
+  $scope.callParams = {
     table_name: '_YOUR_TABLE_NAME_',
     params: {
         limit: 10
